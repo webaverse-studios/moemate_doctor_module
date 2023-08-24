@@ -1,3 +1,5 @@
+
+// Body locations can be called to receive all the body locations
 export const bodyLocations = [
   {
     "ID": 16,

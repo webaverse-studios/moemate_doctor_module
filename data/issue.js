@@ -1,4 +1,14 @@
 const detailIssues = {
+  237: {
+    "Description": "When the erectile center in healthy men is stimulated, the blood vessels in the spongy body of the penis open up to increase blood flow. Drainage of blood from the penis is reduced by the closing of the veins, causing an increased amount of blood to accumulate in the penis, from which an erection results.  Other medical conditions such as (a) venal issues such as diabetes, high blood pressure (hypertension), and dyslipidemia, (b) an issue with the nerves such as paraplegia, multiple sclerosis, dementia, epilepsy, or (c) hormonal imbalances such as low testosterone or hyperprolactinaemia may be responsible for erectile dysfunction.  Psychological issues such as fear of failing to perform sexually, depression, stressful experiences, and dysfunctional partner relationships can lead to erectile dysfunction. Additionally, it’s possible that nerves responsible for having an erection could have been damaged during a prostate operation or there could be side effects from medication.",
+    "DescriptionShort": "Erectile dysfunction is the inability to achieve or maintain an erection during sex in over three fourths of all attempts in a time period of 6 months or longer despite sexual arousal.",
+    "MedicalCondition": "Erectile dysfunction affects about 5% of men in their 40s, 15% of those in their 60s, and 50% over 70.  With advanced age the issue is usually physical, whereas with younger men it’s usually a psychological issue.  The patient suffers from the inability to achieve an erection to have sexual intercourse despite being sexually aroused.",
+    "Name": "Erection problems",
+    "PossibleSymptoms": null,
+    "ProfName": "Erectile dysfunction",
+    "Synonyms": null,
+    "TreatmentDescription": "Possible causes need to be evaluated and eliminated, appropriate medication can be administered, and a testosterone replacement therapy can be put in place.  For psychological causes, psychotherapy is the first course of action.  Phosphodiesterase inhibitors (such as Viagra®) can be used to improve the flow of blood into the spongy body.  Pre-existing conditions such as heart disease, liver insufficiency, and serious retinal diseases require other treatments.  Other medicinal drugs can be injected directly into the penis.  Besides that, there are penis pumps and operations that treat the vessels and implantation of hydraulic prosthetics."
+  },
   495: {
     "Description": "Meteorism is a condition where the abdomen feels full and tight. In this situation, the belly may look swollen and distended.",
     "DescriptionShort": "Meteorism describes the accumulation of gas in the abdomen or in the intestines, accompanied by distention. It is normally not a serious problem. Sometimes, over-the-counter medication is enough to relieve the symptoms. But if meteorism is caused by certain diseases, one should consult a doctor.",
