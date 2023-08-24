@@ -1,3 +1,5 @@
+
+// Issues can be either called to receive the full list of issues or a subset of issues (e.g. all issues of a diagnosis).
 export const issues = [
   {
     "ID": 170,

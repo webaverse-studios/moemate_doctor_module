@@ -1,3 +1,5 @@
+
+// Symptoms can be either called to receive the full list of symptoms or a subset of symptoms (e.g. all symptoms of a body sublocation).
 export const symptoms = [
   {
     "ID": 10,

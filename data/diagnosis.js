@@ -1,4 +1,5 @@
 
+// The diagnosis is the core function of the symptom-checker to compute the potential health issues based on a set of symptoms, gender and age.
 // _ Symptom IDs _ Age _ Gender
 export const diagnosis = {
   _10_1985_Male: [

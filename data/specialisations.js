@@ -1,4 +1,5 @@
 
+// The diagnosis is the core function of the symptom-checker to compute the potential health issues based on a set of symptoms, gender and age, but instead of getting computed diagnosis, you can also get list of suggested specialisations for calulated diseases
 // _ Symptom IDs _ Age _ Gender
 export const specialisations = {
   _13_1988_Male: [
