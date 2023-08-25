@@ -14,6 +14,9 @@
     "minimum": "0.9.4",
     "verified": "0.9.4"
   },
+  "prompts": [
+      "prompts/get_symptoms.hbs"
+  ],
   "models": [
   ],
   "skills": [
