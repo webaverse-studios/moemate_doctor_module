@@ -1,0 +1,25 @@
+{
+  "name": "doctor",
+  "title": "Doctor",
+  "description": "Givs companion the ability to diagnose disease.",
+  "authors": [
+    {
+      "name": "Vis",
+      "email": "gonnavis@gmail.com",
+      "url": "http://gonnavis.com"
+    }
+  ],
+  "version": "1.0",
+  "compatibility": {
+    "minimum": "0.9.4",
+    "verified": "0.9.4"
+  },
+  "models": [
+  ],
+  "skills": [
+      "skills/ask_doctor.json.hbs"
+  ],
+  "scripts": [
+    "scripts/doctor.js"
+  ]
+}
