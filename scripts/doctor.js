@@ -64,6 +64,7 @@ async function getSymptoms(lastMessageContent) {
   const response = await window.models.CallModel(extractModel, { prompts: "get_symptoms" }, { timeout: 10000 });
   window.models.DestroyModel(extractModel);
   console.log('--- getSymptoms response:', response)
+  return;
   const responseSymptoms = JSON.parse(response);
   console.log('--- getSymptoms responseSymptoms:', responseSymptoms)
   return responseSymptoms;
@@ -78,7 +79,7 @@ async function _handleAskDoctor(event) {
   // }
 
   const name = await window.companion.GetCharacterAttribute('name');
-  window.hooks.emit('moemate_core:handle_skill_text', { name: name, value: `Triggered ASK_DOCTOR Skill (in js).` });
+  // window.hooks.emit('moemate_core:handle_skill_text', { name: name, value: `Triggered ASK_DOCTOR Skill (in js).` });
   const lastMessage = await window.companion.GetChatLog()
   const lastMessageContent = lastMessage[lastMessage.length - 1].data.value;
   const responseSymptoms = await getSymptoms(lastMessageContent);
