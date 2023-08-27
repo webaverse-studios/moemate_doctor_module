@@ -9,7 +9,7 @@ import { symptoms } from '../data/symptoms_live.js';
 // var computedHash = CryptoJS.HmacMD5(uri, secret_key);
 // var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
 // console.log('--- computedHashString', computedHashString);
-const computedHashString = `TwxObyXL/N9LNlsDaodqUA==`;
+const computedHashString = `TwxObyXL/N9LNlsDaodqUA==`; // sandbox api, not live api, https://apimedic.com/apikeys
 const apiKey = 'gonnavis@gmail.com';
 const response = await fetch('https://sandbox-authservice.priaid.ch/login', {
   method: 'POST',
