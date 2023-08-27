@@ -69,6 +69,15 @@ async function loadDiagnosis(selectedSymptoms, gender, yearOfBirth) {
   // &format=json
 }
 
+async function loadIssueInfo(issueId) {
+  var url = apiUrls.loadIssueInfo + '/' + issueId + '/info';
+  return await generic_api_call(url, 'issueInfo', 'issueInfoError', 'issueInfoConfig');
+  // https://sandbox-healthservice.priaid.ch/issues/237/info?
+  // token=
+  // &language=en-gb
+  // &format=json
+}
+
 async function getSymptoms(lastMessageContent) {
   const extractModel = window.models.CreateModel("GPT 3.5 Turbo");
   window.models.ApplyContextObject(extractModel, { lastMessageContent: lastMessageContent, symptiomsJson: JSON.stringify(symptoms) });
@@ -107,10 +116,14 @@ async function _handleAskDoctor(event) {
   // [{"Issue":{"ID":431,"Name":"Drug side effect","Accuracy":90,"Icd":"T88.7","IcdName":"Unspecified adverse effect of drug or medicament","ProfName":"Adverse drug reaction","Ranking":1},"Specialisation":[{"ID":15,"Name":"General practice","SpecialistID":0},{"ID":19,"Name":"Internal medicine","SpecialistID":0}]}]
 
   // todo: call (detailed) issue info api
+  const responseIssueInfo = await loadIssueInfo(diagnosis[0].Issue.ID);
+  console.log('--- _handleAskDoctor responseIssueInfo:', responseIssueInfo)
+  const issueInfo = await responseIssueInfo.json();
+  console.log('--- _handleAskDoctor issueInfo:', issueInfo)
 
   // await new Promise(resolve => setTimeout(resolve, 100)); // ensure the triggering of hack_delay. // todo: Prmoise.all
   setTimeout(() => { // ensure the triggering of hack_delay. // todo: Prmoise.all // todo: don't await above
-    window.hooks.emit("hack_delay", `You are now role-playing as a professional doctor, the issue you diagnosed is "${diagnosis[0].Issue.Name}", you must tell the user his/her diagnosed issue, and give advice based on this issue.`);
+    window.hooks.emit("hack_delay", `You are now role-playing as a professional doctor, the issue you diagnosed is "${diagnosis[0].Issue.Name}", you must tell the user his/her diagnosed issue, and give advice based on this issue and following infos about this issue: ${JSON.stringify(issueInfo)}.`);
   }, 100);
 }
 
