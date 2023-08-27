@@ -124,6 +124,7 @@ async function _handleAskDoctor(event) {
 
   const name = await window.companion.GetCharacterAttribute('name');
   // window.hooks.emit('moemate_core:handle_skill_text', { name: name, value: `Triggered ASK_DOCTOR Skill (in js).` });
+  // window.companion.SendMessage({ type: "ASK_DOCTOR", user: name, value: `Doctor is analyzing the symptoms`, timestamp: Date.now(), alt: 'alt' });
   const lastMessage = await window.companion.GetChatLog()
   const lastMessageContent = lastMessage[lastMessage.length - 1].data.value;
   const responseSymptoms = await getSymptoms(lastMessageContent);
