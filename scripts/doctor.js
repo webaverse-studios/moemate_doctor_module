@@ -43,47 +43,15 @@ const apiUrls = {
 const language = 'en-gb';
 const format = 'json';
 
-function makeRequest(ApiObj) {
-  ApiObj.url = ApiObj.URL;
-  var deffered = $q.defer();
-  $http(ApiObj)
-    .then(function (data) {
-      deffered.resolve(data);
-    }, function (data) {
-      deffered.reject(data);
-    })
-  return deffered.promise;
-}
-
-async function generic_api_call(url, scope_variable_name, scope_error_variable_name, scope_config_variable_name) {
+async function generic_api_call(url) {
   var extraArgs = 'token=' + token + '&language=' + language + '&format=' + format;
   url += url.indexOf("?") > 0 ? "&" + extraArgs : "?" + extraArgs;
   return await fetch(url);
-  // await makeRequest({
-  //   URL: url,
-  //   method: 'GET'
-  // })
-  // .then(function (data) {
-  //   vm[scope_variable_name] = data.data != '' ? data.data : 'No results found';
-  //   vm[scope_config_variable_name] = data.config;
-  //   vm[scope_error_variable_name] = '';
-  //   console.log('success', data);
-  // }, function (data) {
-  //   vm[scope_variable_name] = '';
-  //   vm[scope_config_variable_name] = '';
-  //   vm[scope_error_variable_name] = data;
-  //   console.log('error', data);
-  //   return false;
-  // });
 }
 
-/**
-  * [loadDiagnosis Function makes an api call to get diagnosis for given parameters]
-  */
 async function loadDiagnosis(selectedSymptoms, gender, yearOfBirth) {
-  // var symptoms = selectedSymptoms.split(',');
   var url = apiUrls.loadDiagnosis + '?symptoms=' + JSON.stringify(selectedSymptoms) + '&gender=' + gender + '&year_of_birth=' + yearOfBirth;
-  return await generic_api_call(url, 'diagnosis', 'diagnosisError', 'diagnosisConfig');
+  return await generic_api_call(url);
   // https://sandbox-healthservice.priaid.ch/diagnosis?
   // symptoms=[%2213%22] // ["13"] // symptoms=[%2213%22,%2214%22,%22%2015%22] // ["13","14"," 15"]
   // &gender=male
@@ -95,7 +63,7 @@ async function loadDiagnosis(selectedSymptoms, gender, yearOfBirth) {
 
 async function loadIssueInfo(issueId) {
   var url = apiUrls.loadIssueInfo + '/' + issueId + '/info';
-  return await generic_api_call(url, 'issueInfo', 'issueInfoError', 'issueInfoConfig');
+  return await generic_api_call(url);
   // https://sandbox-healthservice.priaid.ch/issues/237/info?
   // token=
   // &language=en-gb
@@ -108,7 +76,6 @@ async function getSymptoms(lastMessageContent) {
   const response = await window.models.CallModel(extractModel, { prompts: "get_symptoms" }, { timeout: 10000 });
   window.models.DestroyModel(extractModel);
   console.log('--- getSymptoms response:', response)
-  // return;
   const responseSymptoms = JSON.parse(response);
   console.log('--- getSymptoms responseSymptoms:', responseSymptoms)
   return responseSymptoms;
@@ -122,17 +89,21 @@ async function _handleAskDoctor(event) {
   //   // The value is the resposne of "hack_usage": "What are the probable symptoms?" but not used. Using response from "get_symptoms.hbs" instead.
   // }
 
-  const name = await window.companion.GetCharacterAttribute('name');
+  // const name = await window.companion.GetCharacterAttribute('name');
   // window.hooks.emit('moemate_core:handle_skill_text', { name: name, value: `Triggered ASK_DOCTOR Skill (in js).` });
   // window.companion.SendMessage({ type: "ASK_DOCTOR", user: name, value: `Doctor is analyzing the symptoms`, timestamp: Date.now(), alt: 'alt' });
   const lastMessage = await window.companion.GetChatLog()
   const lastMessageContent = lastMessage[lastMessage.length - 1].data.value;
+
+  // let the AI automatically select relevant symptoms through the user's message
   const responseSymptoms = await getSymptoms(lastMessageContent);
   const selectedSymptoms = responseSymptoms.map(symptom => symptom.ID.toString()); // ["13","14"," 15"]
   console.log('--- _handleAskDoctor selectedSymptoms:', selectedSymptoms)
   const gender = 'male';
   const yearOfBirth = '1988';
   selectedSymptoms.splice(1); // test: keep only the first symptom, for testing with sandbox api (without live api)
+
+  // call diagnosis api
   const responseDiagnosis = await loadDiagnosis(selectedSymptoms, gender, yearOfBirth)
   window.responseDiagnosis = responseDiagnosis // test
   const diagnosis = await responseDiagnosis.json();
@@ -140,13 +111,12 @@ async function _handleAskDoctor(event) {
   // []
   // [{"Issue":{"ID":431,"Name":"Drug side effect","Accuracy":90,"Icd":"T88.7","IcdName":"Unspecified adverse effect of drug or medicament","ProfName":"Adverse drug reaction","Ranking":1},"Specialisation":[{"ID":15,"Name":"General practice","SpecialistID":0},{"ID":19,"Name":"Internal medicine","SpecialistID":0}]}]
 
-  // todo: call (detailed) issue info api
+  // call (detailed) issue info api
   const responseIssueInfo = await loadIssueInfo(diagnosis[0].Issue.ID);
   console.log('--- _handleAskDoctor responseIssueInfo:', responseIssueInfo)
   const issueInfo = await responseIssueInfo.json();
   console.log('--- _handleAskDoctor issueInfo:', issueInfo)
 
-  // await new Promise(resolve => setTimeout(resolve, 100)); // ensure the triggering of hack_delay. // todo: Prmoise.all
   setTimeout(() => { // ensure the triggering of hack_delay. // todo: Prmoise.all // todo: don't await above
     // window.hooks.emit("hack_delay", `You are now role-playing as a professional doctor, the issue you diagnosed is "${diagnosis[0].Issue.Name}", you must tell the user his/her diagnosed issue, and give advice based on this issue, and based on the following infos about this issue(must use following infos with high percentage in your reply): ${JSON.stringify(issueInfo)}.`);
     window.hooks.emit("hack_delay", `As a professional doctor, the issue you diagnosed is "${diagnosis[0].Issue.Name}", you must tell the user what his/her diagnosed issue, and give advice ONLY based on the following JSON infos about this issue: ${JSON.stringify(issueInfo)}.`);
