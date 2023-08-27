@@ -1,6 +1,6 @@
 
-// import { symptoms } from '../data/symptoms_live.js';
-import { symptoms } from '../data/symptoms.js';
+import { symptoms } from '../data/symptoms_live.js';
+// import { symptoms } from '../data/symptoms.js';
 
 // import CryptoJS from '../lib/CryptoJS/es6/enc-base64-min.js';
 
