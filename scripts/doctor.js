@@ -1,12 +1,31 @@
 
 // import { symptoms } from '../data/symptoms_live.js';
-import CryptoJS from '../lib/CryptoJS/es6/enc-base64-min.js';
+import { symptoms } from '../data/symptoms.js';
 
-var uri = "https://authservice.priaid.ch/login";
-var secret_key = "mysecretkey";
-var computedHash = CryptoJS.HmacMD5(uri, secret_key);
-var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
-console.log('--- computedHashString', computedHashString);
+// import CryptoJS from '../lib/CryptoJS/es6/enc-base64-min.js';
+
+// var uri = "https://authservice.priaid.ch/login";
+// var secret_key = "mysecretkey";
+// var computedHash = CryptoJS.HmacMD5(uri, secret_key);
+// var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
+// console.log('--- computedHashString', computedHashString);
+const computedHashString = `TwxObyXL/N9LNlsDaodqUA==`;
+const apiKey = 'gonnavis@gmail.com';
+const response = await fetch('https://sandbox-authservice.priaid.ch/login', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7,zh-TW;q=0.6,de;q=0.5,ja;q=0.4',
+    'Authorization': `Bearer ${apiKey}:${computedHashString}`,
+  }
+});
+const responseJson = await response.json();
+console.log('--- response login:', responseJson);
+/* {
+  "Token": "...",
+  "ValidThrough": 7200
+} */
+const token = responseJson.Token;
 
 const baseUrl = 'https://sandbox-healthservice.priaid.ch/';
 const apiUrls = {
@@ -23,7 +42,6 @@ const apiUrls = {
 }
 const language = 'en-gb';
 const format = 'json';
-const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imdvbm5hdmlzQGdtYWlsLmNvbSIsInJvbGUiOiJVc2VyIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiMTI3NzIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3ZlcnNpb24iOiIyMDAiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL2xpbWl0IjoiOTk5OTk5OTk5IiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9tZW1iZXJzaGlwIjoiUHJlbWl1bSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbGFuZ3VhZ2UiOiJlbi1nYiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvZXhwaXJhdGlvbiI6IjIwOTktMTItMzEiLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL21lbWJlcnNoaXBzdGFydCI6IjIwMjMtMDgtMjIiLCJpc3MiOiJodHRwczovL3NhbmRib3gtYXV0aHNlcnZpY2UucHJpYWlkLmNoIiwiYXVkIjoiaHR0cHM6Ly9oZWFsdGhzZXJ2aWNlLnByaWFpZC5jaCIsImV4cCI6MTY5MzEzNTE1MCwibmJmIjoxNjkzMTI3OTUwfQ.Oo1JQMmdY1I0rEOy85QC-yG-67c-UVlDv9XoBUBhxTc';
 
 function makeRequest(ApiObj) {
   ApiObj.url = ApiObj.URL;
