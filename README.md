@@ -1,12 +1,12 @@
 # moemate_doctor_module
-Moemate Doctor module based on https://apimedic.com/
+Moemate Doctor module based on https://apimedic.com/ api
 
-The current main function is to let the AI automatically select relevant symptoms through the user's message, and let the AI make suggestions based on the questions derived from the symptoms.
+The current main function is to let the AI automatically select relevant symptoms through the user's message, and let the AI make suggestions based on the issues derived from the symptoms.
 
 ### Usage
-Input something like `Hello/Hi doctor` + symptoms, such as `Hello doctor, I feel my nose is blocked and a little dizzy.`
+Input `Hello/Hi doctor + symptoms`, such as `Hello doctor, I feel my nose is blocked and a little dizzy.`
 
-### Example diagnosed issue: Flue
+### Example diagnosed issue: Flu
 ![image](https://github.com/webaverse-studios/moemate_doctor_module/assets/10785634/c08e676a-e2e2-4cda-a705-ca58d6ca478e)
 Original issue info from apimedic api:
 ```
