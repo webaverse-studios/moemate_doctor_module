@@ -99,9 +99,9 @@ async function _handleAskDoctor(event) {
   const responseSymptoms = await getSymptoms(lastMessageContent);
   const selectedSymptoms = responseSymptoms.map(symptom => symptom.ID.toString()); // ["13","14"," 15"]
   console.log('--- _handleAskDoctor selectedSymptoms:', selectedSymptoms)
-  const gender = 'male';
-  const yearOfBirth = '1988';
-  selectedSymptoms.splice(1); // test: keep only the first symptom, for testing with sandbox api (without live api)
+  const gender = 'male'; // todo: don't hard code
+  const yearOfBirth = '1988'; // todo: don't hard code
+  selectedSymptoms.splice(1); // test: keep only the first symptom, for testing with sandbox api (without live api), to prevent diagnosis.length === 0
 
   // call diagnosis api
   const responseDiagnosis = await loadDiagnosis(selectedSymptoms, gender, yearOfBirth)
@@ -110,6 +110,9 @@ async function _handleAskDoctor(event) {
   console.log('--- _handleAskDoctor diagnosis:', diagnosis)
   // []
   // [{"Issue":{"ID":431,"Name":"Drug side effect","Accuracy":90,"Icd":"T88.7","IcdName":"Unspecified adverse effect of drug or medicament","ProfName":"Adverse drug reaction","Ranking":1},"Specialisation":[{"ID":15,"Name":"General practice","SpecialistID":0},{"ID":19,"Name":"Internal medicine","SpecialistID":0}]}]
+  if (diagnosis.length === 0) {
+    return; // will reply and make suggestions purely based on LLM, without issue info from apimedic
+  }
 
   // call (detailed) issue info api
   const responseIssueInfo = await loadIssueInfo(diagnosis[0].Issue.ID);
