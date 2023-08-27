@@ -1,6 +1,12 @@
 
 // import { symptoms } from '../data/symptoms_live.js';
-import { symptoms } from '../data/symptoms.js';
+import CryptoJS from '../lib/CryptoJS/es6/enc-base64-min.js';
+
+var uri = "https://authservice.priaid.ch/login";
+var secret_key = "mysecretkey";
+var computedHash = CryptoJS.HmacMD5(uri, secret_key);
+var computedHashString = computedHash.toString(CryptoJS.enc.Base64);
+console.log('--- computedHashString', computedHashString);
 
 const baseUrl = 'https://sandbox-healthservice.priaid.ch/';
 const apiUrls = {
