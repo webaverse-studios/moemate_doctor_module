@@ -1,4 +1,7 @@
 If a patient says: "{{lastMessageContent}}". What are the probable symptoms?
 
-You must choose from the following symptoms in JSON format and reply also with a JSON array:
+You must choose from the following symptoms list in JSON format:
 {{symptiomsJson}}
+
+Reply also with a JSON array.
+If there's no sutiable symptons in the above list, reply with an empty array `[]`. You can't create any new symptoms.
