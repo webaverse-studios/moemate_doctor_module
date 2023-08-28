@@ -90,11 +90,12 @@ async function _handleAskDoctor(event) {
   //   // The value is the resposne of "hack_usage": "What are the probable symptoms?" but not used. Using response from "get_symptoms.hbs" instead.
   // }
 
-  // const name = await window.companion.GetCharacterAttribute('name');
-  // window.hooks.emit('moemate_core:handle_skill_text', { name: name, value: `Triggered ASK_DOCTOR Skill (in js).` });
-  // window.companion.SendMessage({ type: "ASK_DOCTOR", user: name, value: `Doctor is analyzing the symptoms`, timestamp: Date.now(), alt: 'alt' });
   const lastMessage = await window.companion.GetChatLog()
   const lastMessageContent = lastMessage[lastMessage.length - 1].data.value;
+
+  // have to send skill message after got lastMessage
+  const name = await window.companion.GetCharacterAttribute('name');
+  window.companion.SendMessage({ type: "ASK_DOCTOR", user: name, value: `Triggered Doctor Skill`, timestamp: Date.now(), alt: 'alt' });
 
   // let the AI automatically select relevant symptoms through the user's message
   const responseSymptoms = await getSymptoms(lastMessageContent);
