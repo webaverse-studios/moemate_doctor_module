@@ -113,6 +113,7 @@ async function _handleAskDoctor(event) {
   // []
   // [{"Issue":{"ID":431,"Name":"Drug side effect","Accuracy":90,"Icd":"T88.7","IcdName":"Unspecified adverse effect of drug or medicament","ProfName":"Adverse drug reaction","Ranking":1},"Specialisation":[{"ID":15,"Name":"General practice","SpecialistID":0},{"ID":19,"Name":"Internal medicine","SpecialistID":0}]}]
   if (diagnosis.length === 0) {
+    window.companion.SendMessage({ type: "ASK_DOCTOR", user: name, value: `Failed to get diagnosis info, reply with original LLM. Please use live api to get more diagnosis info.`, timestamp: Date.now(), alt: 'alt' });
     return; // will reply and make suggestions purely based on LLM, without issue info from apimedic
   }
 
@@ -122,9 +123,11 @@ async function _handleAskDoctor(event) {
   const issueInfo = await responseIssueInfo.json();
   console.log('--- _handleAskDoctor issueInfo:', issueInfo)
 
-  setTimeout(() => { // ensure the triggering of hack_delay. // todo: Prmoise.all // todo: don't await above
+  setTimeout(async () => { // ensure the triggering of hack_delay. // todo: Prmoise.all // todo: don't await above
     // window.hooks.emit("hack_delay", `You are now role-playing as a professional doctor, the issue you diagnosed is "${diagnosis[0].Issue.Name}", you must tell the user his/her diagnosed issue, and give advice based on this issue, and based on the following infos about this issue(must use following infos with high percentage in your reply): ${JSON.stringify(issueInfo)}.`);
     window.hooks.emit("hack_delay", `As a professional doctor, the issue you diagnosed is "${diagnosis[0].Issue.Name}", you must tell the user what his/her diagnosed issue, and give advice ONLY based on the following JSON infos about this issue: ${JSON.stringify(issueInfo)}.`);
+
+    window.companion.SendMessage({ type: "ASK_DOCTOR", user: name, value: `Got diagnosis info`, timestamp: Date.now(), alt: 'alt' });
   }, 100);
 }
 
