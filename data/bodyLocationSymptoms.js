@@ -2,7 +2,7 @@
 
 // _ Body Location ID _ Gender and Age (Male / Female / Boy / Girl)
 export const bodyLocationSymptoms = {
-  _16_male: [
+  _16_Male: [
     {
       "ID": 10,
       "Name": "Abdominal pain",
@@ -119,6 +119,25 @@ export const bodyLocationSymptoms = {
       ],
       "ProfName": "",
       "Synonyms": []
+    }
+  ],
+  _32_Male: [
+    {
+      "ID": 248,
+      "Name": "Swollen glands in the armpits",
+      "HasRedFlag": false,
+      "HealthSymptomLocationIDs": [
+        7,
+        48,
+        15,
+        32
+      ],
+      "ProfName": "",
+      "Synonyms": [
+        "Swollen lymph nodes in the armpits",
+        "Enlarged lymph nodes in the armpits",
+        "Enlarged glands in the armpits"
+      ]
     }
   ],
 }
