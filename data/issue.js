@@ -21,6 +21,16 @@ const detailIssues = {
     "Synonyms": "GERD",
     "TreatmentDescription": "In certain cases, damage to the mucous membrane in the throat can become permanent (Barrett’s esophagus) which requires regular check-ups with a specialist, since this damage can degenerate.  For people suffering from this, it’s recommended that they maintain a low-fat diet, avoid eating meals late at night, quit smoking and using alcohol, and in the case of overweight patients a reduction in weight it recommended.  Medications that reduce stomach acid (proton pump inhibitors, for example) have been shown to be effective, but they do not treat the cause of the reflux of acid.  Furthermore, a test to discover if a stomach infection of Helicobacter pylori is at play may be appropriate, since this can cause or intensify heartburn.  In most cases this can be cured with a treatment of antibiotics."
   },
+  44: {
+    "Description": "A sore throat, also known as pharyngitis, in an inflammation of the throat’s mucus membrane and is often expressed as soreness in the throat, difficulties swallowing, and occasionally fever.",
+    "DescriptionShort": "A throat inflammation is an inflammation of the throat’s mucus membrane and is often experienced as a sore throat, difficulties swallowing, and occasionally fever.  The majority of cases have a flu-like infection as their cause.",
+    "MedicalCondition": "Pharyngitis is widespread and predominantly affects children.  The majority of cases are due to flu-like infections that are caused by viruses.  Bacteria can also cause throat infections, though this is not as common.  Patients suffer from itching or pain in the throat, difficulties swallowing, coughing, and bad breath.  Patients may also don’t feel well or develop fever.",
+    "Name": "Inflammation of the nose and throat",
+    "PossibleSymptoms": "Sputum,Burning in the throat,Fever,Pain in the limbs,Sore throat,Cough,Headache,Swollen glands on the neck,Runny nose,Earache,Pain on swallowing",
+    "ProfName": "Nasopharyngitis",
+    "Synonyms": null,
+    "TreatmentDescription": "Antibiotics are not effective against flu-like viral infections and treatment consists of relieving the patient of ailments by providing sufficient hydration (warm tea, for example), as well as the use of troches or sprays that reduce pain and inflammation.  If bacteria are found to be the cause for the infection, then antibiotics are necessary."
+  },
   80: {
     "Description": "Colds are very common and widespread and most cases are caused by a virus.  Treatment with antibiotics is not advisable, as antibiotics are ineffective against viruses.",
     "DescriptionShort": "The cold, or common cold, is usually the result of a viral infection.  It affects the nose and airways and its symptoms are milder than flu.  A sore throat, pain when swallowing, a runny nose, and (rarely) a mild fever are typical symptoms.",
