@@ -917,7 +917,8 @@ export const symptoms = [
   },
   {
     "ID": 183,
-    "Name": "Side pain"
+    "Name": "Side pain",
+    "bodyLocation": "Lateral chest"
   },
   {
     "ID": 26,
