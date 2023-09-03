@@ -1,6 +1,6 @@
 
 // Issue info can be called to receive all information about a health issue. The short description gives a short overview. A longer information can consist of "Description", "MedicalCondition", "TreatmentDescription".
-const detailIssues = {
+const issueInfos = {
   "11": {
     "Description": "Flu, also known as influenza, is a viral infection of the nose, sinuses, throat, and respiratory tract.  It’s seasonal, often occurring in winter, and can spread rapidly, called then flu epidemic.",
     "DescriptionShort": "Flu (often referred as influenza), is a viral infection of the nose, sinuses, throat, and respiratory tract by an influenza or parainfluenza virus.  Swine flu and bird (avian) flu are specific strains of flu.",

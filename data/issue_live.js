@@ -1,6 +1,6 @@
 
 // Issue info can be called to receive all information about a health issue. The short description gives a short overview. A longer information can consist of "Description", "MedicalCondition", "TreatmentDescription".
-const detailIssues = {
+const issueInfos = {
   41: {
     "Description": "Sinusitis is an inflammation of one or more paranasal sinuses. It can either develop as a common sinus infection (rhinitis, a cold) or less commonly in conjunction with allergies. If sinusitis lasts longer than two months, it is referred to as being chronic. The maxillary sinus is often affected as well in acute or chronic infections. Because of the swelling of the mucosa in the paranasal sinuses, its secretions can no longer flow out properly and they become lodged in the paranasal sinuses. There they can become infected with pathogens (such as viruses).",
     "DescriptionShort": "Sinusitis occurs when the cavities of the nose become inflamed and swollen. The condition is usually caused by a virus and  improves often within a short period of time maximum up to three weeks. It is less commonly coming in combination with an allergy.",
