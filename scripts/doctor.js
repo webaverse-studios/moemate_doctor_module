@@ -30,8 +30,10 @@ console.log('--- response login:', responseJson);
   "ValidThrough": 7200
 } */
 const token = responseJson.Token;
+// const token = '' // live
 
-const baseUrl = 'https://sandbox-healthservice.priaid.ch/';
+const baseUrl = 'https://sandbox-healthservice.priaid.ch/'; // sandbox
+// const baseUrl = 'https://healthservice.priaid.ch/'; // live
 const apiUrls = {
   loadSymptoms: baseUrl + 'symptoms',
   loadIssues: baseUrl + 'issues',
@@ -78,7 +80,7 @@ async function downLoadAllIssueInfos() {
   const issueInfos = {};
   window.issueInfos = issueInfos; // test
   for (let i = 0; i < issues.length; i++) {
-    // if (i >= 10) break; // test
+    // if (i >= 50) break; // test
     const issue = issues[i];
     console.log(i, issue.ID, issue.Name)
     const responseIssueInfo = await loadIssueInfo(issue.ID);
