@@ -3,6 +3,9 @@ import { symptoms } from '../data/symptoms_live.js';
 // import { symptoms } from '../data/symptoms.js';
 // import { symptoms } from '../data/symptoms_test.js';
 
+import { issues } from '../data/issues_live.js';
+window.issues = issues; // test
+
 // import CryptoJS from '../lib/CryptoJS/es6/enc-base64-min.js';
 
 // var uri = "https://authservice.priaid.ch/login";
@@ -70,6 +73,24 @@ async function loadIssueInfo(issueId) {
   // &language=en-gb
   // &format=json
 }
+
+async function downLoadAllIssueInfos() {
+  const issueInfos = {};
+  window.issueInfos = issueInfos; // test
+  for (let i = 0; i < issues.length; i++) {
+    // if (i >= 10) break; // test
+    const issue = issues[i];
+    console.log(i, issue.ID, issue.Name)
+    const responseIssueInfo = await loadIssueInfo(issue.ID);
+    // if not found the issue id, will get 404 error and "Issue not found!" text response
+    if (responseIssueInfo.status === 404) continue;
+    const issueInfo = await responseIssueInfo.json();
+    issueInfos[issue.ID] = issueInfo;
+  }
+  // console.log('--- downLoadAllIssueInfos issueInfos:', issueInfos)
+  return issueInfos;
+}
+window.downLoadAllIssueInfos = downLoadAllIssueInfos; // test
 
 async function getSymptoms(lastMessageContent) {
   const extractModel = window.models.CreateModel("GPT 3.5 Turbo");
