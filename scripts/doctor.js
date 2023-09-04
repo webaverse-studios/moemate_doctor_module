@@ -105,6 +105,16 @@ async function checkForSymptomInfo(lastMessageContent) {
   return responseCheckForSymptomInfo;
 }
 
+async function askUser() {
+  const model = window.models.CreateModel("GPT 3.5 Turbo");
+  const response = await window.models.CallModel(model, { prompts: "ask_user" }, { timeout: 10000 });
+  window.models.DestroyModel(model);
+  console.log('--- askUser response:', response)
+  const responseAskUser = JSON.parse(response);
+  console.log('--- askUser responseAskUser:', responseAskUser)
+  return responseAskUser;
+}
+
 async function getSymptoms(lastMessageContent) {
   const model = window.models.CreateModel("GPT 3.5 Turbo");
   window.models.ApplyContextObject(model, { lastMessageContent: lastMessageContent, symptiomsJson: JSON.stringify(symptoms) });
@@ -130,6 +140,15 @@ async function _handleAskDoctor(event) {
   // have to send skill message after got lastMessage
   const name = await window.companion.GetCharacterAttribute('name');
   window.companion.SendMessage({ type: "ASK_DOCTOR", user: name, value: `Triggered Doctor Skill`, timestamp: Date.now(), alt: 'alt' });
+
+  // // const responseAskUser = await askUser();
+  // // ---
+  // setTimeout(async () => {
+  //   window.hooks.emit("hack_delay", `You are now role-playing as a professional doctor, inquire with the user regarding their gender, age, and any symptoms they may be experiencing.`);
+
+  //   window.companion.SendMessage({ type: "ASK_DOCTOR", user: name, value: `Triggered ask_user`, timestamp: Date.now(), alt: 'alt' });
+  // }, 100);
+  // return;
 
   const responseCheckForSymptomInfo = await checkForSymptomInfo(lastMessageContent);
   // return;
@@ -178,6 +197,11 @@ function _handleSetPrompts(model, type) {
   } else if (type === "check_for_symptom_info") {
     window.prompts_llm.ClearPrompts(model);
     window.prompts_llm.SetPrompt(model, "doctor:check_for_symptom_info", { role: "system" });
+    window.models.ApplyContextObject(model, { 'style_parser': 'None' });
+    return true;
+  } else if (type === "ask_user") {
+    window.prompts_llm.ClearPrompts(model);
+    window.prompts_llm.SetPrompt(model, "doctor:ask_user", { role: "system" });
     window.models.ApplyContextObject(model, { 'style_parser': 'None' });
     return true;
   }
