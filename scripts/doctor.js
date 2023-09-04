@@ -121,7 +121,8 @@ async function _handleAskDoctor(event) {
   window.companion.SendMessage({ type: "ASK_DOCTOR", user: name, value: `Triggered Doctor Skill`, timestamp: Date.now(), alt: 'alt' });
 
   // let the AI automatically select relevant symptoms through the user's message
-  const responseSymptoms = await getSymptoms(lastMessageContent);
+  const response = await getSymptoms(lastMessageContent);
+  const responseSymptoms = response.selectedSymptoms;
   const selectedSymptoms = responseSymptoms.map(symptom => symptom.ID.toString()); // ["13","14"," 15"]
   console.log('--- _handleAskDoctor selectedSymptoms:', selectedSymptoms)
   const gender = 'male'; // todo: don't hard code

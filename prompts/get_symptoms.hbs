@@ -3,5 +3,11 @@ If a patient says: "{{lastMessageContent}}". What are the probable symptoms?
 You must choose from the following symptoms list in JSON format (please also consider the related body location):
 {{symptiomsJson}}
 
-Reply also with a JSON array.
-If there's no sutiable symptons in the above list, reply with an empty array `[]`. You can't create any new symptoms.
+Reply also with a JSON.
+You don't have to choose a symptom, if the user didn't provide specific information about their symptoms, or there's no sutiable symptons in the above list, just reply with an empty array `[]`.
+You can't create any new symptoms, or choose unrelated symptoms.
+Example:
+{
+  selectedSymptoms: [],
+  explain: "..." // string, explain why you choose these symptoms, or why you don't choose any symptoms.
+}
