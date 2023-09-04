@@ -15,7 +15,8 @@
     "verified": "0.9.4"
   },
   "prompts": [
-      "prompts/get_symptoms.hbs"
+      "prompts/get_symptoms.hbs",
+      "prompts/check_for_symptom_info.hbs"
   ],
   "models": [
   ],

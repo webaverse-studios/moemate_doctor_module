@@ -94,11 +94,22 @@ async function downLoadAllIssueInfos() {
 }
 window.downLoadAllIssueInfos = downLoadAllIssueInfos; // test
 
+async function checkForSymptomInfo(lastMessageContent) {
+  const model = window.models.CreateModel("GPT 3.5 Turbo");
+  window.models.ApplyContextObject(model, { lastMessageContent: lastMessageContent });
+  const response = await window.models.CallModel(model, { prompts: "check_for_symptom_info" }, { timeout: 10000 });
+  window.models.DestroyModel(model);
+  console.log('--- checkForSymptomInfo response:', response)
+  const responseCheckForSymptomInfo = JSON.parse(response);
+  console.log('--- checkForSymptomInfo responseCheckForSymptomInfo:', responseCheckForSymptomInfo)
+  return responseCheckForSymptomInfo;
+}
+
 async function getSymptoms(lastMessageContent) {
-  const extractModel = window.models.CreateModel("GPT 3.5 Turbo");
-  window.models.ApplyContextObject(extractModel, { lastMessageContent: lastMessageContent, symptiomsJson: JSON.stringify(symptoms) });
-  const response = await window.models.CallModel(extractModel, { prompts: "get_symptoms" }, { timeout: 10000 });
-  window.models.DestroyModel(extractModel);
+  const model = window.models.CreateModel("GPT 3.5 Turbo");
+  window.models.ApplyContextObject(model, { lastMessageContent: lastMessageContent, symptiomsJson: JSON.stringify(symptoms) });
+  const response = await window.models.CallModel(model, { prompts: "get_symptoms" }, { timeout: 10000 });
+  window.models.DestroyModel(model);
   console.log('--- getSymptoms response:', response)
   const responseSymptoms = JSON.parse(response);
   console.log('--- getSymptoms responseSymptoms:', responseSymptoms)
@@ -119,6 +130,9 @@ async function _handleAskDoctor(event) {
   // have to send skill message after got lastMessage
   const name = await window.companion.GetCharacterAttribute('name');
   window.companion.SendMessage({ type: "ASK_DOCTOR", user: name, value: `Triggered Doctor Skill`, timestamp: Date.now(), alt: 'alt' });
+
+  const responseCheckForSymptomInfo = await checkForSymptomInfo(lastMessageContent);
+  // return;
 
   // let the AI automatically select relevant symptoms through the user's message
   const response = await getSymptoms(lastMessageContent);
@@ -159,6 +173,11 @@ function _handleSetPrompts(model, type) {
   if (type === "get_symptoms") {
     window.prompts_llm.ClearPrompts(model);
     window.prompts_llm.SetPrompt(model, "doctor:get_symptoms", { role: "system" });
+    window.models.ApplyContextObject(model, { 'style_parser': 'None' });
+    return true;
+  } else if (type === "check_for_symptom_info") {
+    window.prompts_llm.ClearPrompts(model);
+    window.prompts_llm.SetPrompt(model, "doctor:check_for_symptom_info", { role: "system" });
     window.models.ApplyContextObject(model, { 'style_parser': 'None' });
     return true;
   }
