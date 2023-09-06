@@ -79,7 +79,7 @@ async function loadIssueInfo(issueId) {
 async function downLoadAllIssueInfos() {
   const issueInfos = {};
   window.issueInfos = issueInfos; // test
-  for (let i = 0; i < issues.length; i++) {
+  for (let i = 0; i < issues.length; i++) { // live issues.length: 448
     // if (i >= 50) break; // test
     const issue = issues[i];
     console.log(i, issue.ID, issue.Name)
