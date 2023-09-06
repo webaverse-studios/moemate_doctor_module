@@ -150,7 +150,7 @@ async function _handleAskDoctor(event) {
   // }, 100);
   // return;
 
-  const responseCheckForSymptomInfo = await checkForSymptomInfo(lastMessageContent);
+  // const responseCheckForSymptomInfo = await checkForSymptomInfo(lastMessageContent);
   // return;
 
   // let the AI automatically select relevant symptoms through the user's message
